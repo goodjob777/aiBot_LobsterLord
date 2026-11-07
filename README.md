@@ -5,12 +5,19 @@ To build a Lobster bot for LLM-callable virtual development environments using P
 
 ## 1. 系統架構與設計理念
 
-本系統為工業級 AI Agent 任務調度與動態自動化執行矩陣。系統採用四方演化架構，將任務處理劃分為以下角色與執行階段：
+本系統為工業級 AI Agent 任務調度與動態自動化執行矩陣。系統採用四方演化架構，將任務處理劃分為以下AI子代理角色與執行階段：
 
 1. 領主 (LORD)：負責接收使用者高階指令，並轉換為可驗證的物理系統目標藍圖 (Goals)。
 2. 經理 (MANAGER)：將藍圖目標進行原子化拆解，輸出可循序執行的子任務陣列 (Sub-Tasks Array)。
 3. 執行師 (EXECUTOR)：針對單一子任務生成具備冪等性 (Idempotency) 與安全防護的 Python、Shell、Docker 或 Git 執行代碼。
 4. 審計員 (AUDITOR)：基於系統物理執行遙測數據 (Telemetry Snapshot) 進行真偽檢驗與閉環審查。
+
+1.1 參數外置化設計
+1.1.1 使用openai API格式
+1.2 主系統, 各子代理間彼此為 非同步傳遞與呼叫, 主系統紀錄執行歷程
+1.3 主系統可同步收到數個不同大型專案, 各個需求具有UUID唯一碼, 各大專案在分別由領主, 經理拆解執行, 並有主專案UUID + 子任務UUID 進程來追蹤
+1.3.1 執行師在執行時需要有timeout 設計, 避免單一子任務卡死整個主系統
+1.4 把開發歷程, 開發要點, bug處理發方式更新本檔案末端
 
 ---
 
